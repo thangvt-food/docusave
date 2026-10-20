@@ -1,0 +1,31 @@
+{
+  "name": "docusave",
+  "version": "2.12.1",
+  "private": true,
+  "description": "Tiện ích trình duyệt xoá làm mờ bản cao cấp, dọn banner và quảng cáo trên Studocu, đồng thời tải tài liệu thành PDF.",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/thangvt-food/docusave.git"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "test": "node --test \"test/*.test.mjs\"",
+    "lint": "web-ext lint --source-dir src --warnings-as-errors=false",
+    "build": "bash scripts/build.sh",
+    "start:firefox": "web-ext run --source-dir src --start-url https://www.studocu.com/",
+    "start:chromium": "web-ext run --source-dir src --target chromium --start-url https://www.studocu.com/",
+    "sign": "bash scripts/sign-firefox.sh",
+    "check": "npm run lint && npm test && npm run build"
+  },
+  "devDependencies": {
+    "jsdom": "^25.0.0",
+    "web-ext": "^10.6.0"
+  },
+  "overrides": {
+    "image-size": "^2.0.4",
+    "shell-quote": "^1.11.0"
+  }
+}

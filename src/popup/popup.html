@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <title>DocuSave</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <header class="head">
+    <img src="../images/48.png" width="28" height="28" alt="">
+    <div>
+      <div class="name">DocuSave</div>
+      <div class="version" id="version"></div>
+    </div>
+  </header>
+
+  <main>
+    <p class="lead">Bật/tắt toàn bộ tiện ích hoặc từng tính năng bên dưới.</p>
+
+    <label class="row master">
+      <input type="checkbox" data-setting="enabled">
+      <span>
+        <span class="label">Bật DocuSave</span>
+        <span class="help">Tắt để trả trang về nguyên bản. Trang tài liệu sẽ tự tải lại.</span>
+      </span>
+    </label>
+
+    <label class="row">
+      <input type="checkbox" data-setting="showDownloadButton">
+      <span>
+        <span class="label">Nút tải xuống</span>
+        <span class="help">Thêm nút Tải xuống để lưu toàn bộ tài liệu thành PDF.</span>
+      </span>
+    </label>
+
+    <label class="row">
+      <input type="checkbox" data-setting="autoLoadPages">
+      <span>
+        <span class="label">Tải mọi trang khi mở</span>
+        <span class="help">Tự cuộn qua tài liệu một lần để tất cả các trang hiện ra mà không cần bạn cuộn.</span>
+      </span>
+    </label>
+
+    <label class="row">
+      <input type="checkbox" data-setting="hideAds">
+      <span>
+        <span class="label">Ẩn quảng cáo</span>
+      </span>
+    </label>
+
+    <label class="row">
+      <input type="checkbox" data-setting="hideAiToolbar">
+      <span>
+        <span class="label">Ẩn thanh công cụ AI</span>
+        <span class="help">Ô "Đặt câu hỏi" và các nút Đề thi thử / Tóm tắt / Trắc nghiệm.</span>
+      </span>
+    </label>
+
+    <label class="row">
+      <input type="checkbox" data-setting="replaceLogo">
+      <span>
+        <span class="label">Thay logo trang</span>
+      </span>
+    </label>
+
+    <p class="note">Cookie được xoá tự động mỗi lần mở trang Studocu, ở cả hai chế độ (bạn sẽ không giữ được đăng nhập).</p>
+    <p class="note" id="status">Thay đổi được áp dụng ở lần tải trang tài liệu tiếp theo.</p>
+  </main>
+
+  <footer class="foot">
+    <a href="https://github.com/thangvt-food/docusave/issues" target="_blank" rel="noopener">Góp ý / báo lỗi</a>
+    <a href="https://github.com/thangvt-food/docusave/releases" target="_blank" rel="noopener">Bản phát hành</a>
+  </footer>
+
+  <script src="popup.js"></script>
+</body>
+</html>

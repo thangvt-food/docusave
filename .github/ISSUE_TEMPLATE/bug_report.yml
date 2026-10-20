@@ -1,0 +1,73 @@
+name: Báo lỗi
+description: Một trang bị mờ, trống, thiếu nội dung hoặc không hoạt động.
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Cảm ơn bạn đã báo lỗi. Trước khi gửi, hãy kiểm tra rằng bạn đang dùng bản phát hành mới nhất và tiện ích đã được bật trên trang (Firefox cần "Always Allow" cho từng trang, xem README).
+
+        Các trang được gắn nhãn "Trang N bị khoá bản cao cấp" là trường hợp dự kiến: Studocu không gửi chữ của trang đó về trình duyệt, nên tiện ích không thể khôi phục. Hãy đọc mục "Những gì không thể làm" trong README trước khi báo những trang này.
+  - type: input
+    id: version
+    attributes:
+      label: Phiên bản tiện ích
+      description: Hiển thị trong popup trên thanh công cụ.
+      placeholder: "2.10.0"
+    validations:
+      required: true
+  - type: dropdown
+    id: browser
+    attributes:
+      label: Trình duyệt
+      options:
+        - Chrome
+        - Brave
+        - Edge
+        - Firefox
+        - Khác (ghi rõ trong phần mô tả)
+    validations:
+      required: true
+  - type: dropdown
+    id: site
+    attributes:
+      label: Trang
+      options:
+        - www.studocu.com
+        - www.studeersnel.nl
+        - www.studocu.vn
+        - www.studocu.id
+    validations:
+      required: true
+  - type: dropdown
+    id: doctype
+    attributes:
+      label: Loại tài liệu
+      description: PDF gốc có chữ chọn được; bản scan chỉ là ảnh.
+      options:
+        - PDF gốc (chữ chọn được)
+        - Bản scan / chỉ có ảnh
+        - Không chắc
+  - type: textarea
+    id: what
+    attributes:
+      label: Hiện tượng
+      description: Bạn thấy gì, bạn mong đợi gì, và những trang nào bị ảnh hưởng (tất cả, một vài trang, các trang cuối).
+    validations:
+      required: true
+  - type: textarea
+    id: console
+    attributes:
+      label: Kết quả console
+      description: Mở console của trình duyệt (F12, tab Console), tải lại tài liệu và dán mọi dòng bắt đầu bằng "DocuSave:". Những dòng đó cho biết trang nào đã khôi phục và trang nào bị khoá.
+      render: text
+  - type: input
+    id: url
+    attributes:
+      label: URL tài liệu
+      description: Không bắt buộc, nhưng giúp người duy trì tái hiện lỗi trên cùng tài liệu.
+  - type: textarea
+    id: extra
+    attributes:
+      label: Thông tin thêm
+      description: Ảnh chụp màn hình rất hữu ích. Hãy kéo chúng vào ô này.

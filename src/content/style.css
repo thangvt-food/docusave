@@ -1,0 +1,559 @@
+/* DocuSave stylesheet.
+ *
+ * Applied before the content scripts run, so nothing premium-related flashes.
+ * Feature toggles are expressed as attributes on <html> set by
+ * SH.applySettingsToDocument() in content/common.js:
+ *   data-ds-ads="show"       keep ads
+ *   data-ds-ai="show"        keep the AI toolbar
+ *   data-ds-download="off"   keep Studocu's own download button
+ *   data-ds-enabled="off"    extension switched off in the popup
+ * A rule whose feature can be switched off is written as
+ * html:not([data-ds-x="..."]) so the default (attribute absent) is "hidden".
+ * Every rule that touches Studocu's own page is also gated on the master
+ * switch: when the extension is off nothing below the overlay section applies.
+ *
+ * When you add a selector here, add it to SELECTORS in content/common.js too.
+ */
+
+/* ========== Core blur removal ========== */
+
+html:not([data-ds-enabled="off"]) body .nofilter {
+    filter: none !important;
+    -webkit-filter: none !important;
+    opacity: 1 !important;
+}
+
+/* Blurred page wrappers (CSS modules with dynamic hashes) */
+html:not([data-ds-enabled="off"]) .page-content[class*="blurred"],
+html:not([data-ds-enabled="off"]) .page-content[class*="Blurred"],
+html:not([data-ds-enabled="off"]) .pf[class*="blurred"],
+html:not([data-ds-enabled="off"]) .pf[class*="Blurred"] {
+    filter: none !important;
+    -webkit-filter: none !important;
+    opacity: 1 !important;
+    user-select: auto !important;
+    -webkit-user-select: auto !important;
+    pointer-events: auto !important;
+    visibility: visible !important;
+    clip-path: none !important;
+    -webkit-clip-path: none !important;
+}
+
+html:not([data-ds-enabled="off"]) .pf.nofilter,
+html:not([data-ds-enabled="off"]) .pf {
+    filter: none !important;
+    -webkit-filter: none !important;
+    opacity: 1 !important;
+    clip-path: none !important;
+    -webkit-clip-path: none !important;
+    mask-image: none !important;
+    -webkit-mask-image: none !important;
+}
+
+html:not([data-ds-enabled="off"]) .page-content,
+html:not([data-ds-enabled="off"]) .page-content.nofilter {
+    filter: none !important;
+    -webkit-filter: none !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    user-select: auto !important;
+    -webkit-user-select: auto !important;
+    pointer-events: auto !important;
+    clip-path: none !important;
+    -webkit-clip-path: none !important;
+    mask-image: none !important;
+    -webkit-mask-image: none !important;
+    color: inherit !important;
+}
+
+html:not([data-ds-enabled="off"]) .pf img,
+html:not([data-ds-enabled="off"]) .page-content img {
+    filter: none !important;
+    -webkit-filter: none !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    clip-path: none !important;
+    -webkit-clip-path: none !important;
+    mask-image: none !important;
+    -webkit-mask-image: none !important;
+}
+
+html:not([data-ds-enabled="off"]) [class*="blurred-image-wrapper"],
+html:not([data-ds-enabled="off"]) [class*="BlurredImage"],
+html:not([data-ds-enabled="off"]) [class*="blurred-page"],
+html:not([data-ds-enabled="off"]) [class*="BlurredPage"] {
+    filter: none !important;
+    -webkit-filter: none !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+/* Overlays with backdrop-filter inside the viewer */
+html:not([data-ds-enabled="off"]) [class*="Viewer_document"] [class*="overlay"],
+html:not([data-ds-enabled="off"]) [class*="Viewer_document"] [class*="Overlay"],
+html:not([data-ds-enabled="off"]) #viewer-wrapper [class*="overlay"],
+html:not([data-ds-enabled="off"]) #viewer-wrapper [class*="Overlay"] {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    background: transparent !important;
+    display: none !important;
+}
+
+/* Pseudo-element overlays on page elements */
+html:not([data-ds-enabled="off"]) .pf::before,
+html:not([data-ds-enabled="off"]) .pf::after,
+html:not([data-ds-enabled="off"]) .page-content::before,
+html:not([data-ds-enabled="off"]) .page-content::after,
+html:not([data-ds-enabled="off"]) [class*="blurred"]::before,
+html:not([data-ds-enabled="off"]) [class*="blurred"]::after,
+html:not([data-ds-enabled="off"]) [class*="Blurred"]::before,
+html:not([data-ds-enabled="off"]) [class*="Blurred"]::after {
+    display: none !important;
+    content: none !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+}
+
+/* ========== Premium banners and preview restrictions ========== */
+
+html:not([data-ds-enabled="off"]) [class*="PremiumBannerBlobWrapper"],
+html:not([data-ds-enabled="off"]) [class*="PremiumBannerHeader"],
+html:not([data-ds-enabled="off"]) [class*="PremiumBannerSubHeader"],
+html:not([data-ds-enabled="off"]) [class*="PremiumBannerBenefitsList"],
+html:not([data-ds-enabled="off"]) [class*="PremiumBannerButtons"],
+html:not([data-ds-enabled="off"]) [class*="InlineBanner_inline-banner"],
+html:not([data-ds-enabled="off"]) [class*="PremiumPageClarificationBanner"],
+html:not([data-ds-enabled="off"]) [class*="premium-banner-wrapper"],
+html:not([data-ds-enabled="off"]) [class*="PremiumBannerWrapper"],
+html:not([data-ds-enabled="off"]) [class*="premiumBannerWrapper"],
+html:not([data-ds-enabled="off"]) [class*="ViewerContainer_premium"],
+html:not([data-ds-enabled="off"]) [data-test-selector="modal-document-viewer-preview-message"],
+html:not([data-ds-enabled="off"]) [data-test-selector="preview-banner-upgrade-first-cta"],
+html:not([data-ds-enabled="off"]) [data-test-selector="preview-banner-upload-second-cta"],
+html:not([data-ds-enabled="off"]) .banner-wrapper,
+html:not([data-ds-enabled="off"]) ._95f5f1767857,
+html:not([data-ds-enabled="off"]) ._3273140306b6 {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    height: 0 !important;
+    width: 0 !important;
+    overflow: hidden !important;
+    pointer-events: none !important;
+}
+
+html:not([data-ds-enabled="off"]) #modal-overlay {
+    display: none !important;
+}
+
+/* ========== Sign-in wall for readers flagged as bots (issue #63) ========== */
+/* When __NEXT_DATA__ has isAntiBotAuthWallEligible, Studocu mounts a sign-in
+   Modal over the document that has no close button, portaled into
+   #main-wrapper, and scroll-locks the page with inline styles on <html>
+   (desktop) or <body> (Android). The document itself is loaded as usual.
+   Keyed off the open AuthWall <dialog> WITHOUT the `hideable` class, which the
+   Modal only adds when it can be closed, so a sign-in modal the reader opened
+   on purpose still works. Hidden rather than removed: the overlay is a React
+   portal node, and removing it makes React throw when it later unmounts. */
+
+html:not([data-ds-enabled="off"]) div:has(> dialog[open][class*="AuthWall"]:not([class*="hideable"])) {
+    display: none !important;
+}
+
+html:not([data-ds-enabled="off"]):has(dialog[open][class*="AuthWall"]:not([class*="hideable"])) {
+    overflow: visible !important;
+    padding-right: 0 !important;
+    height: auto !important;
+}
+
+html:not([data-ds-enabled="off"]):has(dialog[open][class*="AuthWall"]:not([class*="hideable"])) body {
+    position: static !important;
+    top: auto !important;
+    overflow: visible !important;
+}
+
+/* ========== Premium badges, tags and labels ========== */
+
+html:not([data-ds-enabled="off"]) [class*="PremiumBadge"],
+html:not([data-ds-enabled="off"]) [class*="premium-badge"],
+html:not([data-ds-enabled="off"]) [class*="PremiumLabel"],
+html:not([data-ds-enabled="off"]) [class*="PremiumTag"],
+html:not([data-ds-enabled="off"]) [class*="premium_tag"],
+html:not([data-ds-enabled="off"]) [class*="premium_badge"],
+html:not([data-ds-enabled="off"]) [class*="premiumBadge"],
+html:not([data-ds-enabled="off"]) [class*="premiumLabel"],
+html:not([data-ds-enabled="off"]) [class*="premiumTag"],
+html:not([data-ds-enabled="off"]) [class*="premium-label"],
+html:not([data-ds-enabled="off"]) [class*="premium-tag"],
+html:not([data-ds-enabled="off"]) [class*="PremiumIcon"],
+html:not([data-ds-enabled="off"]) [class*="premiumIcon"],
+html:not([data-ds-enabled="off"]) [class*="premium-icon"],
+html:not([data-ds-enabled="off"]) [data-test-selector*="premium-badge"],
+html:not([data-ds-enabled="off"]) [data-test-selector*="premium-tag"],
+html:not([data-ds-enabled="off"]) [data-test-selector*="premium-label"] {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    height: 0 !important;
+    width: 0 !important;
+    overflow: hidden !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    pointer-events: none !important;
+}
+
+/* ========== Studocu's own download button (leads to the paywall) ========== */
+
+html:not([data-ds-enabled="off"]):not([data-ds-download="off"]) [data-test-selector="document-viewer-download-button-topbar"]:not(.download-button-1) {
+    display: none !important;
+    visibility: hidden !important;
+}
+
+/* ========== Ads (Refinery89 / Google Publisher Tag / Adagio) ========== */
+
+html:not([data-ds-enabled="off"]):not([data-ds-ads="show"]) [class*="AdsContainer"],
+html:not([data-ds-enabled="off"]):not([data-ds-ads="show"]) r89-standalone,
+html:not([data-ds-enabled="off"]):not([data-ds-ads="show"]) [id^="r89-"],
+html:not([data-ds-enabled="off"]):not([data-ds-ads="show"]) [id*="r89-"],
+html:not([data-ds-enabled="off"]):not([data-ds-ads="show"]) iframe[id^="google_ads_iframe"],
+html:not([data-ds-enabled="off"]):not([data-ds-ads="show"]) div[id^="google_ads_iframe"],
+html:not([data-ds-enabled="off"]):not([data-ds-ads="show"]) [id^="div-gpt-ad"],
+html:not([data-ds-enabled="off"]):not([data-ds-ads="show"]) [id*="gpt-ad"],
+html:not([data-ds-enabled="off"]):not([data-ds-ads="show"]) [id*="adagio"],
+html:not([data-ds-enabled="off"]):not([data-ds-ads="show"]) [class*="adagio"],
+html:not([data-ds-enabled="off"]):not([data-ds-ads="show"]) [class*="Advertisement"],
+html:not([data-ds-enabled="off"]):not([data-ds-ads="show"]) [class*="advertisement"] {
+    display: none !important;
+    visibility: hidden !important;
+    height: 0 !important;
+    width: 0 !important;
+    overflow: hidden !important;
+    pointer-events: none !important;
+}
+
+/* ========== AI "Ask a question" toolbar (incl. Mock exam / Summary / Quiz) ========== */
+
+html:not([data-ds-enabled="off"]):not([data-ds-ai="show"]) [class*="AIToolbar"] {
+    display: none !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+}
+
+/* ========== Download button ========== */
+
+.download-button-1 {
+    background: #4D8BF5;
+    color: #fff;
+    border: none;
+    border-radius: 24px;
+    padding: 10px 28px;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: normal;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin: 8px auto;
+    width: fit-content;
+    position: relative;
+    z-index: 10;
+    box-shadow: 0 2px 8px rgba(77, 139, 245, 0.3);
+    cursor: pointer;
+    transition: background .2s ease, box-shadow .2s ease, transform .2s ease;
+    text-decoration: none;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+.download-button-1:hover {
+    background: #3a7be0;
+    box-shadow: 0 4px 12px rgba(77, 139, 245, 0.4);
+    transform: translateY(-1px);
+}
+
+.download-button-1:focus-visible {
+    outline: 2px solid #fff;
+    outline-offset: 2px;
+}
+
+.download-button-1 .download-icon {
+    font-size: 16px;
+    line-height: 1;
+}
+
+.download-text {
+    margin-left: 0;
+    font-weight: 500;
+}
+
+/* ========== Logo replacement ========== */
+
+.docusave-logo-replaced {
+    display: inline-flex;
+    align-items: center;
+    gap: 0;
+    cursor: pointer;
+    color: inherit;
+    text-decoration: none;
+}
+
+.docusave-logo-replaced svg {
+    flex-shrink: 0;
+}
+
+.docusave-logo-text {
+    margin-left: 6px;
+    font-weight: 800;
+    font-size: 15px;
+    white-space: nowrap;
+}
+
+.docusave-logo-accent {
+    color: #4D8BF5;
+}
+
+@media (max-width: 600px) {
+    .docusave-logo-text {
+        display: none !important;
+    }
+
+    .download-text {
+        display: none;
+    }
+
+    .download-button-1 {
+        padding: 10px 20px;
+        font-size: 13px;
+    }
+}
+
+/* ========== In-page notice (replaces alert()) ========== */
+
+#ds-notice {
+    position: fixed;
+    left: 50%;
+    bottom: 24px;
+    transform: translate(-50%, 16px);
+    z-index: 2147483646;
+    max-width: min(520px, 90vw);
+    padding: 12px 18px;
+    border-radius: 8px;
+    background: #1a1a2e;
+    color: #fff;
+    font: 14px/1.4 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    box-shadow: 0 6px 24px rgba(0, 0, 0, .35);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .2s ease, transform .2s ease;
+}
+
+#ds-notice.ds-notice-visible {
+    opacity: 1;
+    transform: translate(-50%, 0);
+}
+
+/* ========== Premium-locked page label (issue #58) ========== */
+/* Studocu splits each pdf2htmlEX page into a figure layer (bg{hex}.png) and a
+   separately signed text layer ({objectKey}{hex}.page). For premium pages it
+   signs no text layer, so their words are never sent to the browser. Those
+   pages keep Studocu's blurred preview and carry this label. It sits at the top
+   of the page so the reader learns why it is blurred before scrolling past. */
+
+.ds-gated-note {
+    position: absolute !important;
+    left: 0 !important;
+    right: 0 !important;
+    top: 0 !important;
+    z-index: 30 !important;
+    box-sizing: border-box !important;
+    margin: 0 !important;
+    padding: 10px 16px !important;
+    background: rgba(26, 26, 46, 0.92) !important;
+    color: #fff !important;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+    font-size: 13px !important;
+    line-height: 1.45 !important;
+    text-align: center !important;
+    border-bottom: 2px solid #4D8BF5 !important;
+    filter: none !important;
+    opacity: 1 !important;
+    pointer-events: none !important;
+}
+
+/* ========== Download overlay ========== */
+
+#ds-dl-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 2147483647;
+    background: #525659;
+    overflow: auto;
+}
+
+#ds-dl-overlay .ds-dl-bar {
+    position: sticky;
+    top: 0;
+    z-index: 5;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    background: #1a1a2e;
+    color: #fff;
+    padding: 10px 20px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+#ds-dl-overlay .ds-dl-left {
+    min-width: 0;
+}
+
+#ds-dl-overlay .ds-dl-title {
+    font-size: 14px;
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+#ds-dl-overlay .ds-dl-meta {
+    font-size: 12px;
+    opacity: .7;
+}
+
+#ds-dl-overlay .ds-dl-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+}
+
+#ds-dl-overlay .ds-dl-hint {
+    font-size: 12px;
+    opacity: .7;
+    margin-right: 6px;
+}
+
+#ds-dl-overlay .ds-dl-bar button {
+    border: 0;
+    border-radius: 6px;
+    padding: 9px 16px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: inherit;
+}
+
+#ds-dl-overlay .ds-dl-bar button:disabled {
+    opacity: .5;
+    cursor: default;
+}
+
+#ds-dl-overlay .ds-dl-print { background: #4D8BF5; color: #fff; }
+#ds-dl-overlay .ds-dl-close { background: #444; color: #fff; }
+
+#ds-dl-overlay .ds-dl-loading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    height: 78vh;
+    color: #fff;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+#ds-dl-overlay .ds-dl-msg { font-size: 15px; }
+#ds-dl-overlay .ds-dl-sub { font-size: 13px; opacity: .7; }
+
+#ds-dl-overlay .ds-dl-progress {
+    width: 320px;
+    max-width: 80vw;
+    height: 10px;
+    background: #33334d;
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+#ds-dl-overlay .ds-dl-fill {
+    height: 100%;
+    width: 0;
+    background: #4D8BF5;
+    transition: width .2s;
+}
+
+#ds-dl-overlay .ds-dl-pages .p2hv { margin: 0 auto; }
+
+#ds-dl-overlay .ds-dl-pages .pf {
+    margin: 12px auto !important;
+    background: #fff !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, .4);
+    display: block !important;
+    filter: none !important;
+    opacity: 1 !important;
+}
+
+#ds-dl-overlay .ds-dl-pages .page-content,
+#ds-dl-overlay .ds-dl-pages .pc {
+    display: block !important;
+    visibility: visible !important;
+    filter: none !important;
+    opacity: 1 !important;
+}
+
+#ds-dl-overlay .ds-dl-pages .pf img {
+    filter: none !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+@media (max-width: 700px) {
+    #ds-dl-overlay .ds-dl-hint { display: none; }
+}
+
+/* ========== Print ========== */
+
+@media print {
+    .p2hv .stopoverlappingourstyleplease {
+        display: block;
+    }
+
+    .ds-gated-note {
+        background: #fff !important;
+        color: #000 !important;
+        border-bottom: 1px solid #000 !important;
+        border-top: 0 !important;
+        font-size: 11px !important;
+        padding: 6px 12px !important;
+    }
+
+    /* Only the overlay prints while it is open. */
+    body.ds-dl-open > *:not(#ds-dl-overlay) { display: none !important; }
+    body.ds-dl-open #ds-notice { display: none !important; }
+    html.ds-dl-open, body.ds-dl-open {
+        background: #fff !important;
+        height: auto !important;
+        overflow: visible !important;
+    }
+    body.ds-dl-open #ds-dl-overlay {
+        position: static !important;
+        inset: auto !important;
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        overflow: visible !important;
+        background: #fff !important;
+        height: auto !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+    body.ds-dl-open #ds-dl-overlay .ds-dl-bar { display: none !important; }
+    body.ds-dl-open #ds-dl-overlay .ds-dl-pages .pf {
+        margin: 0 !important;
+        box-shadow: none !important;
+        page-break-after: always;
+        break-after: page;
+    }
+    body.ds-dl-open #ds-dl-overlay .ds-dl-pages .pf:last-child { page-break-after: auto; }
+    @page { margin: 0; }
+}

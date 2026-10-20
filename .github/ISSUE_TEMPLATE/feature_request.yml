@@ -1,0 +1,28 @@
+name: Đề xuất tính năng
+description: Đề xuất một việc mà tiện ích nên làm.
+labels: [enhancement]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Bạn đang muốn làm gì?
+      description: Mô tả tình huống, không chỉ mô tả tính năng. Hiện tại điều gì cản trở bạn?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Bạn muốn tiện ích làm gì?
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Các cách khác bạn đã cân nhắc
+  - type: checkboxes
+    id: scope
+    attributes:
+      label: Phạm vi
+      options:
+        - label: Tính năng này nên là một công tắc trong popup thay vì luôn bật.
+        - label: Tôi sẵn sàng mở pull request cho tính năng này.

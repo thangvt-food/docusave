@@ -1,0 +1,70 @@
+{
+  "manifest_version": 3,
+  "name": "DocuSave",
+  "version": "2.12.1",
+  "description": "Xoá làm mờ bản cao cấp, banner và quảng cáo trên Studocu và Studeersnel, đồng thời tải tài liệu dưới dạng PDF.",
+  "homepage_url": "https://github.com/thangvt-food/docusave",
+  "icons": {
+    "16": "images/16.png",
+    "48": "images/48.png",
+    "128": "images/128.png"
+  },
+  "permissions": ["storage", "cookies"],
+  "host_permissions": [
+    "*://*.studocu.com/*",
+    "*://*.studeersnel.nl/*",
+    "*://*.studocu.vn/*",
+    "*://*.studocu.id/*"
+  ],
+  "background": {
+    "service_worker": "background.js",
+    "scripts": ["background.js"]
+  },
+  "action": {
+    "default_title": "Cài đặt DocuSave",
+    "default_popup": "popup/popup.html",
+    "default_icon": {
+      "16": "images/16.png",
+      "48": "images/48.png",
+      "128": "images/128.png"
+    }
+  },
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "docusave@thangvt-food",
+      "strict_min_version": "142.0",
+      "data_collection_permissions": {
+        "required": ["none"]
+      }
+    }
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["images/*"],
+      "matches": [
+        "https://www.studocu.com/*",
+        "https://www.studeersnel.nl/*",
+        "https://www.studocu.vn/*",
+        "https://www.studocu.id/*"
+      ]
+    }
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://www.studocu.com/*",
+        "https://www.studeersnel.nl/*",
+        "https://www.studocu.vn/*",
+        "https://www.studocu.id/*"
+      ],
+      "css": ["content/style.css"],
+      "js": [
+        "content/common.js",
+        "content/cleanup.js",
+        "content/pages.js",
+        "content/download.js",
+        "content/main.js"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,94 @@
+name: Release
+
+# Pushing a tag like v2.11.0 builds the extension, signs the Firefox build
+# through Mozilla when the AMO secrets are configured, and publishes a GitHub
+# release with the matching CHANGELOG section as its notes.
+
+on:
+  push:
+    tags: ["v[0-9]+.[0-9]+.[0-9]+"]
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    env:
+      TAG: ${{ github.ref_name }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      - name: Tag must match the manifest version
+        run: |
+          [[ "$TAG" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]] || { echo "unexpected tag: $TAG"; exit 1; }
+          v="$(node -p "require('./src/manifest.json').version")"
+          test "v$v" = "$TAG" || { echo "manifest.json is $v but the tag is $TAG"; exit 1; }
+          echo "VERSION=$v" >> "$GITHUB_ENV"
+
+      - run: npm run lint
+      - run: npm test
+      - run: npm run build
+
+      - name: Sign the Firefox build (only when AMO secrets are set)
+        env:
+          WEB_EXT_API_KEY: ${{ secrets.WEB_EXT_API_KEY }}
+          WEB_EXT_API_SECRET: ${{ secrets.WEB_EXT_API_SECRET }}
+        run: |
+          if [ -z "$WEB_EXT_API_KEY" ] || [ -z "$WEB_EXT_API_SECRET" ]; then
+            echo "AMO secrets not configured; publishing the unsigned .xpi."
+            echo "SIGNED=no" >> "$GITHUB_ENV"
+            exit 0
+          fi
+          npx --yes web-ext sign \
+            --source-dir=src \
+            --channel=unlisted \
+            --artifacts-dir=web-ext-artifacts \
+            --api-key="$WEB_EXT_API_KEY" \
+            --api-secret="$WEB_EXT_API_SECRET"
+          cp web-ext-artifacts/*.xpi "dist/docusave-v${VERSION}.xpi"
+          echo "SIGNED=yes" >> "$GITHUB_ENV"
+
+      - name: Release notes from CHANGELOG.md
+        run: |
+          # Everything between "## VERSION" and the next "## " heading.
+          awk -v v="$VERSION" '
+            index($0, "## " v) == 1 { on = 1; next }
+            on && /^## / { exit }
+            on { print }
+          ' CHANGELOG.md > notes.md
+          if [ ! -s notes.md ]; then
+            echo "Không có mục CHANGELOG cho $VERSION; hãy thêm trước khi tạo tag." > notes.md
+          fi
+          {
+            echo
+            echo "## Cài đặt"
+            echo
+            echo "**Chrome / Brave / Edge**: tải \`docusave-v${VERSION}.zip\`, giải nén, mở \`chrome://extensions\`, bật Developer mode, chọn Load unpacked và chọn thư mục vừa giải nén."
+            echo
+            if [ "$SIGNED" = "yes" ]; then
+              echo "**Firefox**: tải \`docusave-v${VERSION}.xpi\` (đã được Mozilla ký), mở \`about:addons\`, bấm biểu tượng bánh răng, chọn Install Add-on From File."
+            else
+              echo "**Firefox**: \`docusave-v${VERSION}.xpi\` trong bản này chưa được ký; Firefox chính thức sẽ từ chối cài cho đến khi có bản đã ký. Hãy dùng Firefox Developer Edition hoặc Nightly với \`xpinstall.signatures.required\` tắt, hoặc nạp tạm qua \`about:debugging\`."
+            fi
+            echo
+            echo "Xem README để biết hướng dẫn đầy đủ."
+          } >> notes.md
+          cat notes.md
+
+      - name: Create the GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "$TAG" \
+            --title "DocuSave $TAG" \
+            --notes-file notes.md \
+            "dist/docusave-v${VERSION}.zip" \
+            "dist/docusave-v${VERSION}.xpi"

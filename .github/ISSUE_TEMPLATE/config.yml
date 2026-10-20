@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Vấn đề bảo mật
+    url: https://github.com/thangvt-food/docusave/security/advisories/new
+    about: Hãy báo lỗ hổng bảo mật riêng tư thay vì mở issue công khai.
+  - name: Trang bị khoá bản cao cấp
+    url: https://github.com/thangvt-food/docusave#những-gì-không-thể-làm
+    about: Không tiện ích nào có thể xoá làm mờ trang bị khoá bản cao cấp. Hãy đọc mục này trước khi báo lỗi.
