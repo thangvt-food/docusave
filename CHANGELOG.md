@@ -2,6 +2,14 @@
 
 Mọi thay đổi đáng chú ý của dự án được ghi ở đây. Định dạng theo [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), dự án dùng [Semantic Versioning](https://semver.org/).
 
+## Chưa phát hành
+
+### Thay đổi
+
+- Trang dự án chuyển hoàn toàn sang tiếng Việt, bổ sung hướng dẫn cài riêng cho Chrome/Brave/Edge và Firefox, và nhắc đợi Studocu tải xong trước khi bấm Tải xuống.
+- Trang dự án dùng tên miền riêng <https://docusave.yangio.id.vn/>; địa chỉ GitHub Pages cũ chuyển hướng về đây.
+- Font của trang dùng Manrope thay Instrument Sans để có đủ dấu tiếng Việt; bộ subset vẫn giữ JetBrains Mono.
+
 ## 2.12.2 - 2026-10-20
 
 ### Thêm

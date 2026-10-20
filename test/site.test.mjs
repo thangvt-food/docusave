@@ -61,6 +61,11 @@ test('no colour literal outside the token blocks', () => {
     assert.doesNotMatch(body, /\brgba?\(/, 'rgb colour outside the token blocks');
 });
 
+test('the page is Vietnamese and points at the custom domain', () => {
+    assert.match(html, /<html lang="vi">/);
+    assert.ok(html.includes('<link rel="canonical" href="https://docusave.yangio.id.vn/">'));
+});
+
 test('the theme key is the same in the head script and in theme.js', () => {
     const js = fs.readFileSync(path.join(site, 'theme.js'), 'utf8');
     const inHead = html.match(/localStorage\.getItem\('([^']+)'\)/);

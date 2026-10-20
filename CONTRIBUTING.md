@@ -28,7 +28,7 @@ Nạp thư mục `src/` làm tiện ích chưa đóng gói trong Chrome (`chrome
 | `src/popup/` | Popup trên thanh công cụ để sửa cài đặt. |
 | `test/` | Các bộ test `node --test`. `test/fixtures/documents.mjs` tạo bốn dạng tài liệu mà tiện ích phải phân biệt. |
 | `docs/ARCHITECTURE.md` | Cách Studocu phục vụ các trang và lý do một số trang không thể mở. Đọc file này trước khi sửa `pages.js`. |
-| `site/` | Trang dự án, <https://thangvt-food.github.io/docusave/>. HTML và CSS thuần, được `.github/workflows/pages.yml` xuất bản nguyên trạng mỗi khi push lên `main` có thay đổi trong `site/`. Font là các bản subset nằm trong repo, tạo bằng `scripts/fetch-fonts.sh`; `test/site.test.mjs` kiểm tra các tham chiếu file cục bộ và token dark mode. |
+| `site/` | Trang dự án, <https://docusave.yangio.id.vn/>. HTML và CSS thuần, được `.github/workflows/pages.yml` xuất bản nguyên trạng mỗi khi push lên `main` có thay đổi trong `site/`. Font là các bản subset nằm trong repo, tạo bằng `scripts/fetch-fonts.sh`; `test/site.test.mjs` kiểm tra các tham chiếu file cục bộ và token dark mode. |
 
 ## Sửa selector bị hỏng
 

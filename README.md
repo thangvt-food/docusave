@@ -4,7 +4,7 @@ Tiện ích trình duyệt cho [studocu.com](https://www.studocu.com), [studeers
 
 Hoạt động trên Chrome, Brave, Edge và Firefox 142 trở lên (Manifest V3). Không cần tài khoản, không có máy chủ, không thu thập dữ liệu.
 
-Trang dự án: <https://thangvt-food.github.io/docusave/>
+Trang dự án: <https://docusave.yangio.id.vn/>
 
 ![Giao diện DocuSave trên một tài liệu Studocu](site/assets/revealed.webp)
 
@@ -51,7 +51,7 @@ Bản phát hành không kèm `.xpi`; Firefox chỉ nạp tạm và tiện ích 
 
 ### Tải tài liệu
 
-1. Mở tài liệu và bấm nút **Tải xuống** màu xanh phía trên các trang.
+1. Mở tài liệu và **đợi Studocu tải xong** — các trang đã hiện nội dung và quá trình tự tải trang đã chạy xong — rồi bấm nút **Tải xuống** màu xanh phía trên các trang. Bấm quá sớm có thể làm bản xem trước thiếu trang hoặc thiếu chữ; nếu lỡ bấm sớm, hãy đóng bản xem trước, tải lại trang và thử lại.
 2. Bản xem trước mở ra ngay trong tab hiện tại và tự chụp từng trang. Bạn sẽ thấy "Đang chụp trang X / N" rồi "Đang nhúng ảnh X / N". Hãy giữ tab ở phía trước: trình duyệt sẽ làm chậm tab nền và quá trình chụp có thể bị treo.
 3. Khi xong, bấm **In / Lưu PDF** (hoặc Ctrl+P / Cmd+P) và chọn "Lưu dưới dạng PDF" làm đích.
 

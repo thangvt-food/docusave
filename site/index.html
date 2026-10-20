@@ -1,37 +1,37 @@
 <!doctype html>
-<html lang="en">
+<html lang="vi">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>DocuSave</title>
-<meta name="description" content="A browser extension that removes the premium blur and the upsell chrome from Studocu documents and downloads them as one complete PDF. Chrome, Brave, Edge and Firefox. No account, no server, no data collection.">
+<title>DocuSave — Tải tài liệu Studocu thành một file PDF</title>
+<meta name="description" content="Tiện ích trình duyệt xoá làm mờ bản cao cấp và các khối mời nâng cấp trên tài liệu Studocu, tải toàn bộ tài liệu thành một file PDF. Chrome, Brave, Edge và Firefox. Không cần tài khoản, không máy chủ, không thu thập dữ liệu.">
 <link rel="icon" href="./assets/icon-128.png" type="image/png" sizes="128x128">
-<link rel="canonical" href="https://thangvt-food.github.io/docusave/">
+<link rel="canonical" href="https://docusave.yangio.id.vn/">
 <script>
-    // Blocking, and in the head, because the alternative is a light page
-    // repainting to dark after the stylesheet has already been applied. It
-    // reads one key and sets one attribute; the CSS does the rest.
+    // Chặn render và đặt trong <head> để trang không loé sáng rồi mới chuyển
+    // sang tối sau khi stylesheet đã áp dụng. Đoạn này chỉ đọc một khoá và đặt
+    // một thuộc tính; phần còn lại do CSS lo.
     try {
         var t = localStorage.getItem('docusave-theme');
         if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t;
     } catch (e) {
-        // Private mode, or storage disabled. The page is correct without it.
+        // Chế độ riêng tư hoặc trình duyệt chặn lưu trữ. Trang vẫn đúng.
     }
 </script>
 <link rel="stylesheet" href="./style.css">
 </head>
 
 <body>
-<a class="skip" href="#main">Skip to content</a>
+<a class="skip" href="#main">Bỏ qua nội dung</a>
 
 <header class="head">
     <div class="wrap head-inner">
         <div class="brand">
             <!--
-                The same tile the extension puts in place of the site logo: a
-                blue rounded square with a D in it. It is decoration beside
-                the wordmark, so it is hidden from assistive technology rather
-                than given a label that repeats the words next to it.
+                Cùng ô biểu tượng mà tiện ích đặt thay cho logo của trang: một
+                hình vuông bo góc màu xanh với chữ D. Đây là phần trang trí bên
+                cạnh tên dự án, nên được ẩn với công nghệ hỗ trợ thay vì gắn
+                nhãn lặp lại chữ ngay cạnh nó.
             -->
             <svg class="mark" viewBox="0 0 32 32" width="30" height="30" aria-hidden="true" focusable="false">
                 <rect width="32" height="32" rx="7" fill="currentColor"></rect>
@@ -45,214 +45,224 @@
                 <circle cx="8" cy="8" r="6" fill="none" stroke="currentColor" stroke-width="1.4"></circle>
                 <path d="M8 2 A6 6 0 0 0 8 14 Z" fill="currentColor"></path>
             </svg>
-            <span>Dark mode</span>
+            <span>Chế độ tối</span>
         </button>
     </div>
 </header>
 
-<!-- tabindex="-1" so the skip link moves keyboard focus and not just the
-     viewport. Without it some browsers scroll here and leave focus on the
-     link, so the next Tab goes back into the header. -->
+<!-- tabindex="-1" để liên kết bỏ qua chuyển cả tiêu điểm bàn phím, không chỉ
+     cuộn màn hình. Không có nó, một số trình duyệt chỉ cuộn tới đây và để tiêu
+     điểm ở liên kết, nên lần Tab tiếp theo lại quay vào phần đầu trang. -->
 <main id="main" tabindex="-1">
     <div class="wrap">
         <p class="lede">
-            Removes the premium blur and the upsell chrome from Studocu documents,
-            and downloads them as one complete PDF.
+            Xoá lớp làm mờ bản cao cấp và các khối mời nâng cấp khỏi tài liệu
+            Studocu, rồi tải toàn bộ tài liệu thành một file PDF.
         </p>
         <p class="sub">
-            A browser extension for studocu.com, studeersnel.nl, studocu.vn and studocu.id.
-            Chrome, Brave, Edge and Firefox 142 or newer. No account, no server, no data
-            collection.
+            Tiện ích trình duyệt cho studocu.com, studeersnel.nl, studocu.vn và studocu.id.
+            Chrome, Brave, Edge và Firefox 142 trở lên. Không cần tài khoản, không máy chủ,
+            không thu thập dữ liệu.
         </p>
 
         <p class="actions">
             <a class="btn btn-primary" href="https://github.com/thangvt-food/docusave/releases/latest">
-                Download the latest release
+                Tải bản mới nhất
             </a>
             <a class="btn" href="https://github.com/thangvt-food/docusave">
-                Source on GitHub
+                Mã nguồn trên GitHub
             </a>
         </p>
         <p class="note">
-            Every release carries a <code>.zip</code> for Chrome, Brave, Edge and Firefox. It
-            does not go through a store, so it is loaded from the file;
-            <a href="#install">the steps</a> take a minute.
+            Mỗi bản phát hành kèm một file <code>.zip</code> dùng cho Chrome, Brave, Edge và
+            Firefox. Tiện ích không qua cửa hàng nên được nạp từ file;
+            <a href="#install">các bước cài đặt</a> chỉ mất khoảng một phút.
         </p>
     </div>
 
     <!--
-        One screenshot, not a light and dark pair: what it shows is the site,
-        which has no dark theme, with the extension active on a premium page.
+        Một ảnh chụp duy nhất, không phải cặp sáng/tối: thứ trong ảnh là trang
+        web, vốn không có giao diện tối, với tiện ích đang bật trên một tài liệu
+        trả phí.
     -->
     <figure class="shot">
         <img
             src="./assets/revealed.webp"
             width="1280"
             height="1257"
-            alt="A Studocu document open in the browser with the extension active: no premium banner or Upgrade button, and a page of text fully readable where the site would have blurred it.">
+            alt="Một tài liệu Studocu mở trong trình duyệt với tiện ích đang bật: không còn banner bản cao cấp hay nút Nâng cấp, và một trang chữ hiển thị đầy đủ ở chỗ trang web thường làm mờ.">
     </figure>
 
     <div class="wrap">
         <section class="section" aria-labelledby="does">
-            <p class="micro">What it does</p>
-            <h2 id="does">The document, without the parts that sell you something</h2>
+            <p class="micro">Tính năng</p>
+            <h2 id="does">Tài liệu, không kèm những khối mời nâng cấp</h2>
             <dl class="points">
-                <dt>The blur goes.</dt>
+                <dt>Lớp mờ biến mất.</dt>
                 <dd>
-                    Every page whose content Studocu sends to your browser is shown sharp, and
-                    kept sharp while the viewer re-renders around it. Blur removal is the one
-                    thing that is always on.
+                    Mọi trang mà Studocu thực sự gửi nội dung về trình duyệt đều được hiển thị
+                    rõ, và giữ rõ khi trình xem render lại. Đây là tính năng luôn bật.
                 </dd>
 
-                <dt>The upsell chrome goes with it.</dt>
+                <dt>Các khối mời nâng cấp cũng biến mất.</dt>
                 <dd>
-                    The premium banners, the badges, the Upgrade button and the modal that covers
-                    the document are removed before they can flash. The ads and the "Ask a
-                    question" AI toolbar are hidden as well.
+                    Banner bản cao cấp, huy hiệu, nút Nâng cấp và hộp thoại che tài liệu bị gỡ
+                    trước khi kịp hiện. Quảng cáo và thanh công cụ "Đặt câu hỏi" của AI cũng
+                    được ẩn.
                 </dd>
 
-                <dt>Download as one PDF.</dt>
+                <dt>Tải thành một file PDF.</dt>
                 <dd>
-                    A Download button above the pages captures every page, text and figures
-                    both, and prints the whole document through the browser's own Save as PDF.
-                    Each sheet takes the size of the page it carries, so a document with mixed
-                    orientations comes out the way it went in.
+                    Nút Tải xuống phía trên các trang chụp lại toàn bộ trang, cả chữ lẫn hình,
+                    rồi in cả tài liệu qua chức năng Lưu dưới dạng PDF của trình duyệt. Mỗi tờ
+                    giấy có kích thước đúng bằng trang nó chứa, nên tài liệu trộn khổ dọc và
+                    ngang vẫn ra đúng như ban đầu.
                 </dd>
 
-                <dt>Every page loads on open.</dt>
+                <dt>Mọi trang được tải khi mở tài liệu.</dt>
                 <dd>
-                    The viewer normally renders a page only as you scroll past it. The extension
-                    walks the document once so every page is rendered and ready, then puts you
-                    back where you were.
+                    Trình xem thường chỉ render một trang khi bạn cuộn qua nó. Tiện ích đi qua
+                    tài liệu một lượt để mọi trang được render và sẵn sàng, rồi đưa bạn về
+                    đúng vị trí cũ.
                 </dd>
 
-                <dt>Each extra is a switch.</dt>
+                <dt>Mỗi tính năng là một công tắc.</dt>
                 <dd>
-                    The download button, the automatic page loading, ad hiding, the AI toolbar
-                    and the logo replacement can each be turned off from the toolbar popup.
-                    Settings live in the browser's own synced storage and apply the next time a
-                    document loads.
+                    Có thể tắt riêng nút Tải xuống, tự tải trang, ẩn quảng cáo, thanh công cụ
+                    AI và thay logo trong popup trên thanh công cụ. Cài đặt được lưu trong bộ
+                    nhớ đồng bộ của trình duyệt và áp dụng ở lần mở tài liệu tiếp theo.
                 </dd>
             </dl>
         </section>
 
         <section class="section" aria-labelledby="cannot">
-            <p class="micro">What it cannot do</p>
-            <h2 id="cannot">A page the site never sends cannot be unblurred</h2>
+            <p class="micro">Điều không thể làm</p>
+            <h2 id="cannot">Trang mà trang web không gửi thì không thể xoá mờ</h2>
             <p>
-                Studocu renders a native PDF as two separate layers per page: a background image
-                holding the figures (rules, table borders, coloured boxes) and a separate HTML
-                text layer holding the words. The two are authorised separately, and on a
-                premium document the site never sends the text layer of the locked pages to the
-                browser at all. No extension can un-blur those pages, because the words are not
-                on your computer in any form.
+                Studocu dựng một PDF gốc thành hai lớp cho mỗi trang: một ảnh nền chứa hình vẽ
+                (đường kẻ, viền bảng, ô màu) và một lớp chữ HTML đặt đè lên. Hai lớp được cấp
+                quyền riêng, và với tài liệu trả phí, Studocu không gửi lớp chữ của các trang
+                bị khoá về trình duyệt. Không tiện ích nào có thể xoá làm mờ những trang đó, vì
+                nội dung chữ không hề có trên máy bạn.
             </p>
             <p>
-                Pages in that state keep the site's blurred preview and carry a label that says
-                so, in the viewer and in the download, so you can tell a locked page from a page
-                that failed to load. Every page whose text the site does send is unlocked in
-                full, and the browser console lists exactly which pages could not be recovered.
+                Những trang như vậy vẫn giữ bản xem trước bị làm mờ của Studocu và được gắn
+                nhãn "Trang N bị khoá bản cao cấp" trong trình xem và trong bản tải xuống, để
+                bạn phân biệt với trang bị lỗi. Mọi trang mà Studocu có gửi chữ đều được mở
+                đầy đủ, và console của trình duyệt liệt kê chính xác những trang không thể
+                khôi phục.
             </p>
         </section>
 
         <section class="section" id="install" aria-labelledby="install-heading">
-            <p class="micro">Install</p>
-            <h2 id="install-heading">From a release, in either browser</h2>
+            <p class="micro">Cài đặt</p>
+            <h2 id="install-heading">Cài từ file ZIP, cho Chrome và Firefox</h2>
             <p>
-                Download the zip from the
-                <a href="https://github.com/thangvt-food/docusave/releases/latest">latest release</a>.
-                The version number is part of the file name.
+                Tải file zip từ
+                <a href="https://github.com/thangvt-food/docusave/releases/latest">bản phát hành mới nhất</a>.
+                Số phiên bản nằm trong tên file. Hãy giải nén ra một thư mục cố định; đừng nạp
+                trực tiếp từ trong file zip.
             </p>
 
             <h3>Chrome, Brave, Edge</h3>
             <ol class="steps">
-                <li>Download <code>docusave-vX.Y.Z.zip</code> and extract it somewhere you will keep it.</li>
-                <li>Open <code>chrome://extensions</code> (Brave: <code>brave://extensions</code>, Edge: <code>edge://extensions</code>).</li>
-                <li>Turn on Developer mode, top right.</li>
-                <li>Click Load unpacked and pick the extracted folder, the one that contains <code>manifest.json</code>.</li>
+                <li>Tải <code>docusave-vX.Y.Z.zip</code> và giải nén vào một thư mục bạn muốn giữ.</li>
+                <li>Mở <code>chrome://extensions</code> (Brave: <code>brave://extensions</code>, Edge: <code>edge://extensions</code>).</li>
+                <li>Bật <strong>Chế độ dành cho nhà phát triển</strong> ở góc trên bên phải.</li>
+                <li>Bấm <strong>Tải tiện ích chưa đóng gói</strong> và chọn thư mục vừa giải nén, thư mục có file <code>manifest.json</code>.</li>
+                <li>Ghim DocuSave lên thanh công cụ để mở popup cài đặt nhanh hơn.</li>
             </ol>
             <p>
-                To update, extract the new zip over the old folder and press the reload icon on
-                the extension's card.
+                Để cập nhật, giải nén file zip mới đè lên thư mục cũ rồi bấm biểu tượng tải lại
+                trên thẻ tiện ích. Sau đó tải lại trang Studocu đang mở.
             </p>
 
             <h3>Firefox</h3>
             <ol class="steps">
-                <li>Download <code>docusave-vX.Y.Z.zip</code> and extract it somewhere you will keep it.</li>
-                <li>Open <code>about:debugging#/runtime/this-firefox</code>, click Load Temporary Add-on and pick <code>manifest.json</code> in the extracted folder.</li>
-                <li>Open a Studocu document, click the puzzle icon in the toolbar, open the extension's settings and choose Always Allow on studocu.com, and on studeersnel.nl, studocu.vn or studocu.id if you use them.</li>
+                <li>Tải <code>docusave-vX.Y.Z.zip</code> và giải nén vào một thư mục bạn muốn giữ.</li>
+                <li>Mở <code>about:debugging#/runtime/this-firefox</code>.</li>
+                <li>Bấm <strong>Load Temporary Add-on...</strong> và chọn file <code>manifest.json</code> trong thư mục vừa giải nén.</li>
+                <li>Mở một tài liệu Studocu, bấm biểu tượng mảnh ghép trên thanh công cụ, mở phần cài đặt của DocuSave và chọn <strong>Always Allow on studocu.com</strong> (và trên studeersnel.nl, studocu.vn hoặc studocu.id nếu bạn dùng).</li>
             </ol>
             <p>
-                Releases do not include an <code>.xpi</code>, so Firefox loads the add-on
-                temporarily and it disappears when the browser closes. For a permanent install,
-                sign the zip through Mozilla Add-ons or use Firefox Developer Edition or Nightly
-                with <code>xpinstall.signatures.required</code> off.
+                Bản phát hành không kèm <code>.xpi</code>, nên Firefox chỉ nạp tạm và tiện ích sẽ
+                mất khi đóng trình duyệt. Nếu cần cài lâu dài, hãy ký file zip qua Mozilla
+                Add-ons hoặc dùng Firefox Developer Edition/Nightly với
+                <code>xpinstall.signatures.required</code> đặt thành <code>false</code>.
             </p>
         </section>
 
         <section class="section" aria-labelledby="download">
-            <p class="micro">Downloading a document</p>
-            <h2 id="download">Three steps, and the tab stays in front</h2>
+            <p class="micro">Tải tài liệu</p>
+            <h2 id="download">Đợi tài liệu tải xong, rồi tải chỉ với ba bước</h2>
+            <p>
+                <strong>Quan trọng:</strong> hãy đợi Studocu tải xong tài liệu — các trang đã
+                hiện nội dung và quá trình tự tải trang đã chạy xong — rồi mới bấm
+                <strong>Tải xuống</strong>. Bấm quá sớm có thể làm bản xem trước thiếu trang
+                hoặc thiếu chữ. Nếu lỡ bấm sớm, hãy đóng bản xem trước, tải lại trang và thử
+                lại.
+            </p>
             <ol class="steps">
-                <li>Open the document and click the blue Download button above the pages.</li>
-                <li>A preview opens in the same tab and captures every page on its own. It reports "Capturing pages X / N" and then "Embedding images X / N". Keep the tab in the foreground: a browser throttles a background tab and the capture stalls.</li>
-                <li>When it finishes, click Print / Save as PDF, or press Ctrl+P (Cmd+P on a Mac), and choose Save as PDF as the destination.</li>
+                <li>Mở tài liệu, đợi các trang hiện ra, rồi bấm nút <strong>Tải xuống</strong> màu xanh phía trên các trang.</li>
+                <li>Bản xem trước mở ra ngay trong tab hiện tại và tự chụp từng trang. Bạn sẽ thấy "Đang chụp trang X / N" rồi "Đang nhúng ảnh X / N". Hãy giữ tab ở phía trước: trình duyệt sẽ làm chậm tab nền và quá trình chụp có thể bị treo.</li>
+                <li>Khi xong, bấm <strong>In / Lưu PDF</strong> (hoặc Ctrl+P / Cmd+P) và chọn "Lưu dưới dạng PDF" làm đích.</li>
             </ol>
-            <p>Esc, or the Close button, leaves the preview.</p>
+            <p>Nhấn Esc hoặc bấm <strong>Đóng</strong> để thoát bản xem trước.</p>
         </section>
 
         <section class="section" aria-labelledby="how">
-            <p class="micro">How it works</p>
-            <h2 id="how">Two layers per page, fetched from a CDN that signs its URLs</h2>
+            <p class="micro">Cách hoạt động</p>
+            <h2 id="how">Hai lớp trên mỗi trang, tải từ CDN có URL ký sẵn</h2>
             <p>
-                Studocu's viewer is pdf2htmlEX output wrapped in a React virtual scroller. Each
-                page is a background image plus a positioned HTML text layer, both fetched from
-                a CDN with signed URLs that are embedded in the page. The extension reads those
-                signed parameters, works out which pages the server will actually serve, fetches
-                the full-resolution assets for those, and labels the rest. The blur itself is a
-                CSS filter the extension strips and keeps stripped as React re-renders.
+                Trình xem của Studocu là đầu ra của pdf2htmlEX được bọc trong một virtual
+                scroller của React. Mỗi trang gồm một ảnh nền và một lớp chữ HTML định vị, cả
+                hai được tải từ CDN bằng URL có chữ ký nằm sẵn trong trang. Tiện ích đọc các
+                tham số đã ký, xác định những trang máy chủ thực sự cho phép tải, lấy asset độ
+                phân giải đầy đủ cho những trang đó và gắn nhãn cho phần còn lại. Phần làm mờ
+                là một bộ lọc CSS; tiện ích gỡ nó và giữ nó bị gỡ khi React render lại.
             </p>
             <p>
-                <a href="https://github.com/thangvt-food/docusave/blob/main/docs/ARCHITECTURE.md">The architecture document</a>
-                has the CDN layout, the access model and the reasoning behind the premium-locked
-                detection, for anyone who wants to check the claim above before trusting it.
+                <a href="https://github.com/thangvt-food/docusave/blob/main/docs/ARCHITECTURE.md">Tài liệu kiến trúc</a>
+                mô tả bố cục CDN, mô hình cấp quyền và cách phát hiện trang bị khoá bản cao
+                cấp, dành cho ai muốn kiểm tra những tuyên bố trên trước khi tin tưởng.
             </p>
         </section>
 
         <section class="section" aria-labelledby="build">
-            <p class="micro">Build from source</p>
-            <h2 id="build">Plain files, one command to package them</h2>
+            <p class="micro">Tự build từ mã nguồn</p>
+            <h2 id="build">File thuần, một lệnh để đóng gói</h2>
             <p>
-                Node 20 or newer. The extension has no runtime dependencies and no bundler: the
-                content scripts load in manifest order and share one namespace.
+                Cần Node 20 trở lên. Tiện ích không có dependency lúc chạy và không dùng
+                bundler: các content script được nạp theo thứ tự trong manifest và dùng chung
+                một namespace.
             </p>
-            <pre tabindex="0" role="region" aria-label="Commands to clone, test and build"><code>git clone https://github.com/thangvt-food/docusave.git
+            <pre tabindex="0" role="region" aria-label="Các lệnh clone, test và build"><code>git clone https://github.com/thangvt-food/docusave.git
 cd docusave
 npm install
 npm test
 npm run build</code></pre>
             <p>
-                That runs the unit and fixture tests and packages <code>src/</code> into
-                <code>dist/</code>. Load <code>src/</code> as an unpacked extension to run the
-                working copy directly, or let web-ext launch a browser with it through
-                <code>npm run start:firefox</code> or <code>npm run start:chromium</code>.
+                Lệnh trên chạy unit test và fixture test rồi đóng gói <code>src/</code> vào
+                <code>dist/</code>. Bạn có thể nạp thư mục <code>src/</code> làm tiện ích chưa
+                đóng gói để chạy bản đang sửa, hoặc để web-ext mở trình duyệt với
+                <code>npm run start:firefox</code> hay <code>npm run start:chromium</code>.
                 <a href="https://github.com/thangvt-food/docusave/blob/main/CONTRIBUTING.md">CONTRIBUTING</a>
-                covers the layout and how a release is cut.
+                trình bày cấu trúc dự án và quy trình phát hành.
             </p>
         </section>
 
         <section class="section" aria-labelledby="problems">
-            <p class="micro">When something comes back</p>
-            <h2 id="problems">Studocu renames its classes; the fix is a selector</h2>
+            <p class="micro">Khi có vấn đề</p>
+            <h2 id="problems">Studocu đổi tên class; cách sửa thường là thêm selector</h2>
             <p>
-                The site changes its CSS class names from time to time. When a banner or the
-                blur reappears after a site update, the fix is almost always one new selector,
-                and pull requests for those are very welcome. For anything else,
-                <a href="https://github.com/thangvt-food/docusave/issues/new/choose">open an issue</a>:
-                the bug template asks for your browser, the extension version, the kind of
-                document and the lines starting with <code>DocuSave:</code> from the browser
-                console, which say exactly which pages the extension could and could not
-                recover.
+                Trang web thỉnh thoảng đổi tên class CSS. Khi banner hoặc hiệu ứng làm mờ quay
+                lại sau một đợt cập nhật của Studocu, cách sửa gần như luôn là thêm một
+                selector mới, và pull request cho những trường hợp này luôn được hoan nghênh.
+                Với lỗi khác, hãy
+                <a href="https://github.com/thangvt-food/docusave/issues/new/choose">mở issue</a>:
+                mẫu báo lỗi sẽ hỏi trình duyệt, phiên bản tiện ích, loại tài liệu và các dòng
+                bắt đầu bằng <code>DocuSave:</code> trong console. Những dòng đó cho biết
+                chính xác trang nào đã khôi phục được và trang nào không.
             </p>
         </section>
     </div>
@@ -263,24 +273,25 @@ npm run build</code></pre>
         <p>
             <a href="https://github.com/thangvt-food/docusave">github.com/thangvt-food/docusave</a>
             &middot;
-            <a href="https://github.com/thangvt-food/docusave/releases">Releases</a>
+            <a href="https://github.com/thangvt-food/docusave/releases">Bản phát hành</a>
             &middot;
             <a href="https://github.com/thangvt-food/docusave/blob/main/LICENSE">MIT</a>
         </p>
         <p class="fonts">
-            Set in subsets of two fonts, each licensed under the SIL Open Font License 1.1 and
-            renamed as the licence requires for a modified version. Instrument Sans, copyright
-            2022 the Instrument Sans Project Authors. JetBrains Mono, copyright 2020 the
-            JetBrains Mono Project Authors. Each licence text ships beside its font file in the
+            Trang dùng bản subset của hai font, mỗi font theo giấy phép SIL Open Font License
+            1.1 và được đổi tên theo yêu cầu của giấy phép cho bản đã chỉnh sửa. Manrope,
+            copyright 2018 The Manrope Project Authors. JetBrains Mono, copyright 2020 The
+            JetBrains Mono Project Authors. Giấy phép của từng font nằm cạnh file font trong
             repository.
         </p>
         <p class="fonts">
-            This page makes no third-party requests and sets no cookie. There is nothing here to
-            consent to.
+            Trang này không gửi request tới bên thứ ba và không đặt cookie. Không có gì cần
+            bạn đồng ý.
         </p>
         <p class="fonts">
-            Not affiliated with or endorsed by Studocu. Published for educational purposes; you
-            are responsible for complying with the terms of service of any site you use it on.
+            Không liên kết và không được Studocu bảo trợ. Được phát hành cho mục đích học tập;
+            bạn tự chịu trách nhiệm tuân thủ điều khoản sử dụng của trang web bạn dùng tiện
+            ích trên đó.
         </p>
     </div>
 </footer>
