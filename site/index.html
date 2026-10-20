@@ -74,9 +74,9 @@
             </a>
         </p>
         <p class="note">
-            Every release carries a <code>.zip</code> for Chrome, Brave and Edge and an
-            <code>.xpi</code> for Firefox. Neither goes through a store, so each is loaded from
-            the file; <a href="#install">the steps</a> take a minute.
+            Every release carries a <code>.zip</code> for Chrome, Brave, Edge and Firefox. It
+            does not go through a store, so it is loaded from the file;
+            <a href="#install">the steps</a> take a minute.
         </p>
     </div>
 
@@ -159,7 +159,7 @@
             <p class="micro">Install</p>
             <h2 id="install-heading">From a release, in either browser</h2>
             <p>
-                Download the archive for your browser from the
+                Download the zip from the
                 <a href="https://github.com/thangvt-food/docusave/releases/latest">latest release</a>.
                 The version number is part of the file name.
             </p>
@@ -178,16 +178,15 @@
 
             <h3>Firefox</h3>
             <ol class="steps">
-                <li>Download <code>docusave-vX.Y.Z.xpi</code>.</li>
-                <li>Open <code>about:addons</code>, click the gear icon, choose Install Add-on From File and pick the file.</li>
+                <li>Download <code>docusave-vX.Y.Z.zip</code> and extract it somewhere you will keep it.</li>
+                <li>Open <code>about:debugging#/runtime/this-firefox</code>, click Load Temporary Add-on and pick <code>manifest.json</code> in the extracted folder.</li>
                 <li>Open a Studocu document, click the puzzle icon in the toolbar, open the extension's settings and choose Always Allow on studocu.com, and on studeersnel.nl, studocu.vn or studocu.id if you use them.</li>
             </ol>
             <p>
-                Release builds of Firefox only install add-ons Mozilla has signed, and the notes
-                on each release say whether the attached <code>.xpi</code> is. An unsigned one,
-                like a build you make yourself, needs Firefox Developer Edition or Nightly with
-                <code>xpinstall.signatures.required</code> off, or a temporary load through
-                <code>about:debugging</code>.
+                Releases do not include an <code>.xpi</code>, so Firefox loads the add-on
+                temporarily and it disappears when the browser closes. For a permanent install,
+                sign the zip through Mozilla Add-ons or use Firefox Developer Edition or Nightly
+                with <code>xpinstall.signatures.required</code> off.
             </p>
         </section>
 

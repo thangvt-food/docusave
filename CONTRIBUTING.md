@@ -74,5 +74,4 @@ ES2020 thuần, chạy không cần bundler trên Chrome và Firefox hiện tạ
    git push origin main vX.Y.Z
    ```
 
-4. Workflow phát hành sẽ chạy lint, test, build `dist/docusave-vX.Y.Z.{zip,xpi}`, ký file `.xpi` qua Mozilla nếu đã đặt secret `WEB_EXT_API_KEY` và `WEB_EXT_API_SECRET` của repository, rồi tạo GitHub release với phần changelog tương ứng làm nội dung.
-5. Nếu chưa đặt secret, hãy ký cục bộ bằng `npm run sign` (xem `scripts/sign-firefox.sh`) và tải file `.xpi` đã ký lên release bằng `gh release upload vX.Y.Z web-ext-artifacts/*.xpi --clobber`.
+4. Workflow phát hành sẽ chạy lint, test, build `dist/docusave-vX.Y.Z.zip`, rồi tạo GitHub release với phần changelog tương ứng làm nội dung. Bản phát hành chỉ có file zip, không kèm `.xpi`.

@@ -14,4 +14,4 @@
 - [ ] Selector mới hoặc đã sửa có mặt trong cả `src/content/common.js` và `src/content/style.css`
 - [ ] Đã thêm test ở nơi hợp lý (`test/`)
 - [ ] Đã thêm một dòng dưới "Chưa phát hành" trong `CHANGELOG.md`
-- [ ] Không có file build (`.zip`, `.xpi`) trong diff
+- [ ] Không có file build (`.zip`) trong diff

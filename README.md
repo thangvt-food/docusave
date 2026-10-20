@@ -28,7 +28,7 @@ Chi tiết kỹ thuật nằm trong [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)
 
 ## Cài đặt
 
-Tải bản mới nhất từ [trang phát hành](https://github.com/thangvt-food/docusave/releases). Mỗi bản có file `.zip` cho trình duyệt Chromium và file `.xpi` cho Firefox.
+Tải bản mới nhất từ [trang phát hành](https://github.com/thangvt-food/docusave/releases). Mỗi bản có một file `.zip` dùng cho Chrome, Brave, Edge và Firefox.
 
 ### Chrome, Brave, Edge
 
@@ -41,11 +41,11 @@ Tải bản mới nhất từ [trang phát hành](https://github.com/thangvt-foo
 
 ### Firefox
 
-1. Tải `docusave-vX.Y.Z.xpi`.
-2. Mở `about:addons`, bấm biểu tượng bánh răng, chọn **Install Add-on From File...** rồi chọn file `.xpi`.
+1. Tải `docusave-vX.Y.Z.zip` và giải nén vào một thư mục bạn muốn giữ.
+2. Mở `about:debugging#/runtime/this-firefox`, bấm **Load Temporary Add-on...** rồi chọn file `manifest.json` trong thư mục vừa giải nén.
 3. Mở một tài liệu Studocu, bấm biểu tượng mảnh ghép trên thanh công cụ, mở phần cài đặt của tiện ích và chọn **Always Allow on studocu.com** (và trên studeersnel.nl, studocu.vn hoặc studocu.id nếu bạn dùng).
 
-Bản Firefox chính thức chỉ cài được tiện ích đã được Mozilla ký. File `.xpi` trong bản phát hành đã được ký; nếu bạn tự build từ mã nguồn, hãy dùng Firefox Developer Edition hoặc Nightly với `xpinstall.signatures.required` đặt thành `false`, hoặc chạy tạm qua `about:debugging`.
+Bản phát hành không kèm `.xpi`; Firefox chỉ nạp tạm và tiện ích sẽ mất khi đóng trình duyệt. Nếu cần cài lâu dài, hãy tự ký qua Mozilla Add-ons hoặc dùng Firefox Developer Edition/Nightly với `xpinstall.signatures.required` đặt thành `false`.
 
 ## Sử dụng
 
@@ -77,7 +77,7 @@ cd docusave
 npm install
 npm test          # unit và fixture test (node --test + jsdom)
 npm run lint      # web-ext lint trên src/
-npm run build     # dist/docusave-vX.Y.Z.{zip,xpi}
+npm run build     # dist/docusave-vX.Y.Z.zip
 ```
 
 Bạn có thể nạp thư mục `src/` làm tiện ích chưa đóng gói để chạy bản đang sửa, hoặc dùng `npm run start:firefox` / `npm run start:chromium` để web-ext mở trình duyệt với tiện ích.
@@ -97,7 +97,7 @@ src/                mã tiện ích (phần được đóng gói)
     style.css         nạp trước khi script chạy
   popup/            popup cài đặt trên thanh công cụ
 test/               các bộ test node --test với fixture jsdom
-scripts/            build và ký Firefox
+scripts/            build
 docs/               ghi chú kiến trúc
 site/               trang dự án, xuất bản nguyên trạng lên GitHub Pages
 ```

@@ -27,6 +27,10 @@ Mọi thay đổi đáng chú ý của dự án được ghi ở đây. Định 
 
 - Trang dự án tại <https://thangvt-food.github.io/docusave/>, dựng từ `site/` và xuất bản bằng workflow Pages.
 
+### Thay đổi
+
+- Bản phát hành chỉ đính kèm file `.zip`; không phát hành `.xpi`. Firefox nạp tạm qua `about:debugging`.
+
 ## 2.12.0 - 2026-09-20
 
 ### Thêm

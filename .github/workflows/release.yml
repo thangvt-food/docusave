@@ -1,7 +1,6 @@
 name: Release
 
-# Pushing a tag like v2.11.0 builds the extension, signs the Firefox build
-# through Mozilla when the AMO secrets are configured, and publishes a GitHub
+# Pushing a tag like v2.12.1 builds the extension and publishes a GitHub
 # release with the matching CHANGELOG section as its notes.
 
 on:
@@ -37,25 +36,6 @@ jobs:
       - run: npm test
       - run: npm run build
 
-      - name: Sign the Firefox build (only when AMO secrets are set)
-        env:
-          WEB_EXT_API_KEY: ${{ secrets.WEB_EXT_API_KEY }}
-          WEB_EXT_API_SECRET: ${{ secrets.WEB_EXT_API_SECRET }}
-        run: |
-          if [ -z "$WEB_EXT_API_KEY" ] || [ -z "$WEB_EXT_API_SECRET" ]; then
-            echo "AMO secrets not configured; publishing the unsigned .xpi."
-            echo "SIGNED=no" >> "$GITHUB_ENV"
-            exit 0
-          fi
-          npx --yes web-ext sign \
-            --source-dir=src \
-            --channel=unlisted \
-            --artifacts-dir=web-ext-artifacts \
-            --api-key="$WEB_EXT_API_KEY" \
-            --api-secret="$WEB_EXT_API_SECRET"
-          cp web-ext-artifacts/*.xpi "dist/docusave-v${VERSION}.xpi"
-          echo "SIGNED=yes" >> "$GITHUB_ENV"
-
       - name: Release notes from CHANGELOG.md
         run: |
           # Everything between "## VERSION" and the next "## " heading.
@@ -73,11 +53,9 @@ jobs:
             echo
             echo "**Chrome / Brave / Edge**: tải \`docusave-v${VERSION}.zip\`, giải nén, mở \`chrome://extensions\`, bật Developer mode, chọn Load unpacked và chọn thư mục vừa giải nén."
             echo
-            if [ "$SIGNED" = "yes" ]; then
-              echo "**Firefox**: tải \`docusave-v${VERSION}.xpi\` (đã được Mozilla ký), mở \`about:addons\`, bấm biểu tượng bánh răng, chọn Install Add-on From File."
-            else
-              echo "**Firefox**: \`docusave-v${VERSION}.xpi\` trong bản này chưa được ký; Firefox chính thức sẽ từ chối cài cho đến khi có bản đã ký. Hãy dùng Firefox Developer Edition hoặc Nightly với \`xpinstall.signatures.required\` tắt, hoặc nạp tạm qua \`about:debugging\`."
-            fi
+            echo "**Firefox**: tải \`docusave-v${VERSION}.zip\`, giải nén, mở \`about:debugging#/runtime/this-firefox\`, bấm Load Temporary Add-on và chọn \`manifest.json\` trong thư mục vừa giải nén."
+            echo
+            echo "Bản phát hành chỉ có file zip; không kèm \`.xpi\`."
             echo
             echo "Xem README để biết hướng dẫn đầy đủ."
           } >> notes.md
@@ -90,5 +68,4 @@ jobs:
           gh release create "$TAG" \
             --title "DocuSave $TAG" \
             --notes-file notes.md \
-            "dist/docusave-v${VERSION}.zip" \
-            "dist/docusave-v${VERSION}.xpi"
+            "dist/docusave-v${VERSION}.zip"

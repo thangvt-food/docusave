@@ -7,7 +7,7 @@ web-ext-artifacts/
 # Dependencies
 node_modules/
 
-# Credentials for scripts/sign-firefox.sh
+# Local credentials and env files
 *.env
 .amo-env
 

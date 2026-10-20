@@ -17,7 +17,6 @@
     "build": "bash scripts/build.sh",
     "start:firefox": "web-ext run --source-dir src --start-url https://www.studocu.com/",
     "start:chromium": "web-ext run --source-dir src --target chromium --start-url https://www.studocu.com/",
-    "sign": "bash scripts/sign-firefox.sh",
     "check": "npm run lint && npm test && npm run build"
   },
   "devDependencies": {
