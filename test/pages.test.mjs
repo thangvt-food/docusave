@@ -104,6 +104,41 @@ test('scanned document: no labels, blank pages get the bg image injected', () =>
     });
 });
 
+test('fallback bg image is tagged and removed after the viewer mounts the real image', () => {
+    const { SH, document, window } = setup({ shape: 'scanned', pageCount: 1, states: { 1: 'empty' } });
+    const pf = document.querySelector('.pf');
+    const NativeImage = window.Image;
+    window.Image = function () {
+        const img = document.createElement('img');
+        const src = Object.getOwnPropertyDescriptor(window.HTMLImageElement.prototype, 'src');
+        Object.defineProperty(img, 'src', {
+            configurable: true,
+            get() { return src.get.call(img); },
+            set(value) {
+                src.set.call(img, value);
+                if (img.onload) img.onload();
+            },
+        });
+        return img;
+    };
+
+    SH.pages.ensureAllPagesLoaded();
+    window.Image = NativeImage;
+
+    assert.ok(pf.querySelector('img[data-ds-injected-img]'), 'injected fallback carries the ds marker');
+    assert.equal(pf.querySelectorAll('img').length, 1);
+
+    const real = document.createElement('img');
+    real.className = 'bi';
+    Object.defineProperty(real, 'complete', { value: true });
+    Object.defineProperty(real, 'naturalWidth', { value: 800 });
+    pf.appendChild(real);
+
+    SH.pages.ensureAllPagesLoaded();
+    assert.equal(pf.querySelector('[data-ds-injected-img]'), null, 'fallback removed once a real image exists');
+    assert.equal(pf.querySelectorAll('img').length, 1);
+});
+
 test('gating still works after patchNextData cleared hasBlurredPages (2.10.0 regression)', () => {
     const { SH, pfs, document } = setup({
         shape: 'text-with-gaps', pageCount: 2, freePages: [1], states: { 1: 'empty', 2: 'empty' },

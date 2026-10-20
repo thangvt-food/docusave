@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "DocuSave",
-  "version": "2.12.1",
+  "version": "2.12.2",
   "description": "Xoá làm mờ bản cao cấp, banner và quảng cáo trên Studocu và Studeersnel, đồng thời tải tài liệu dưới dạng PDF.",
   "homepage_url": "https://github.com/thangvt-food/docusave",
   "icons": {

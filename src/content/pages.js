@@ -100,7 +100,7 @@
                 if (!pf.querySelector('img')) {
                     img.className = 'bi x0 y0 w1 h1';
                     img.alt = '';
-                    img.dataset.shInjectedImg = '1';
+                    img.dataset.dsInjectedImg = '1';
                     img.style.cssText = 'position:absolute;top:0;left:0;width:100%;height:100%;' +
                         'opacity:1;filter:none;visibility:visible;';
                     pf.style.filter = 'none';
@@ -190,7 +190,7 @@
             img = document.createElement('img');
             img.className = 'bi x0 y0 w1 h1';
             img.alt = '';
-            img.dataset.shInjectedImg = '1';
+            img.dataset.dsInjectedImg = '1';
             img.style.cssText = 'position:absolute;top:0;left:0;width:100%;height:100%;';
             pf.appendChild(img);
         }
@@ -239,7 +239,7 @@
             if (imgs.length > 1) {
                 const ours = pf.querySelector('img[data-ds-injected-img]');
                 const real = Array.prototype.find.call(imgs, function (im) {
-                    return !im.dataset.shInjectedImg && SH.imgLoaded(im);
+                    return !im.dataset.dsInjectedImg && SH.imgLoaded(im);
                 });
                 if (ours && real) ours.remove();
             }

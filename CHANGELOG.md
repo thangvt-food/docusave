@@ -2,7 +2,7 @@
 
 Mọi thay đổi đáng chú ý của dự án được ghi ở đây. Định dạng theo [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), dự án dùng [Semantic Versioning](https://semver.org/).
 
-## Chưa phát hành
+## 2.12.2 - 2026-10-20
 
 ### Thêm
 
@@ -15,6 +15,7 @@ Mọi thay đổi đáng chú ý của dự án được ghi ở đây. Định 
 
 ### Sửa
 
+- Ảnh nền dự phòng không còn phủ lên chữ sau khi trình xem dựng ảnh thật. Rebrand đã đổi selector dọn ảnh sang `data-ds-injected-img` nhưng đoạn code gắn marker vẫn dùng tên cũ, nên ảnh nền chỉ có hình vẽ ở lại trên trang và che mất chữ trong bảng/sơ đồ. Marker đã được thống nhất và có test hồi quy.
 - PDF in ra không còn bị thu nhỏ hoặc lệch trên những tài liệu mà stylesheet pdf2htmlEX dùng một khổ trang khi hiển thị và một khổ khác khi in. Kích thước tờ giấy được đo với rule in của tài liệu được bật, và chiều cao lẻ được làm tròn lên để không tràn sang một tờ trắng thừa. Firefox giờ nhận cùng khổ trang với Chrome vì có thêm một rule `@page` không tên đi kèm các rule `@page` có tên.
 
 ## 2.12.1 - 2026-09-26
