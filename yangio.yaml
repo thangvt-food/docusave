@@ -1,0 +1,23 @@
+slug: docusave
+name: DocuSave
+tagline: Mở khoá tài liệu Studocu và tải thành PDF
+url: https://docusave.yangio.id.vn/
+status: live
+visibility: public
+description: Tiện ích trình duyệt xoá làm mờ bản cao cấp, dọn banner/quảng cáo trên Studocu và tải tài liệu thành PDF; không có máy chủ.
+tags:
+  - tiện-ích
+  - studocu
+  - pdf
+category: tools
+tech:
+  - javascript
+  - browser-extension
+hosting: github-pages
+updated: '2026-10-20'
+version: 2.12.2
+icon: 📄
+auth: none
+links:
+  repo: https://github.com/thangvt-food/docusave
+notes: Trang dự án và extension trong repo; domain docusave.yangio.id.vn. Không thu thập dữ liệu.
